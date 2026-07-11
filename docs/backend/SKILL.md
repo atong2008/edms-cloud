@@ -4,7 +4,7 @@ description: >-
   ALWAYS invoke before generating, modifying, or reviewing EDMS backend Java code.
   Enforces microservice boundaries, MyBatis-Plus conventions, transaction discipline,
   API contract (R<T>), OAuth2 security rules. Triggers on backend Java development,
-  "后端规范", "edms-be-guard", or .java files under edms-auth/edms-upms/edms-common/edms-visual.
+  "后端规范", "edms-be-guard", or .java files under backend/edms-auth/backend/edms-upms/backend/edms-common/backend/edms-visual.
 metadata:
   pattern: reviewer
   domain: edms-java-microservices
@@ -111,7 +111,7 @@ edms-{module}-biz/
 
 `references/`、`assets/` 相对于本 skill 目录（`docs/backend/`）；`shared/` 位于 `docs/shared/`。
 
-Cursor 入口：`.cursor/skills/edms-be-governance/SKILL.md`（已配置）；编辑 `edms-*/**/*.java` 时由 `.cursor/rules/edms-backend-java.mdc` 自动注入。
+Cursor 入口：`.cursor/skills/edms-be-governance/SKILL.md`（已配置）；编辑 `backend/edms-*/**/*.java` 时由 `.cursor/rules/edms-backend-java.mdc` 自动注入。
 
 ## 自动注入 Context
 

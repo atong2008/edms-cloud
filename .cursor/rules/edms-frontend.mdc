@@ -1,12 +1,12 @@
 ---
 description: EDMS 前端 Guard（Vben 5.7、/admin API、PERM、i18n）
-globs: edms-ui/**/*.{vue,ts,tsx}
+globs: frontend/**/*.{vue,ts,tsx}
 alwaysApply: false
 ---
 
 # EDMS 前端（自动规则）
 
-编辑 `edms-ui` 下文件时，必须遵守以下 Layer 0 规则。细则与模板：
+编辑 `frontend` 下文件时，必须遵守以下 Layer 0 规则。细则与模板：
 
 - Guard 入口：`docs/frontend/SKILL.md`
 - API 权威：`docs/frontend/references/api-rules.md`

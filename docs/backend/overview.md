@@ -21,7 +21,7 @@
                            │
          ┌─────────────────┼─────────────────┐
          ▼                 ▼                 ▼
-   edms-auth [3000]  edms-upms-biz [4000]  edms-visual/*
+   edms-auth [3000]  edms-upms [4000]  edms-visual/*
          │                 │                 │
          └──────── edms-common-* ────────────┘
                            │
@@ -32,7 +32,7 @@
 |------|------|----------|
 | edms-gateway | 路由、超时 | — |
 | edms-auth | OAuth2、Token | `/auth/**` |
-| edms-upms-biz | 用户/角色/菜单/部门/字典 | `/admin/**` |
+| edms-upms | 用户/角色/菜单/部门/字典 | `/admin/**` |
 | edms-codegen | 代码生成 | `/gen/**` |
 | edms-quartz | 定时任务 | `/job/**` |
 | edms-monitor | 监控 | `/monitor/**` |
@@ -95,9 +95,9 @@ edms-{domain}-biz  →  edms-{domain}-api  →  edms-common-*
 - [ ] **2. 包名**：`com.edmscloud.edms.{domain}`
 - [ ] **3. 依赖**：biz 依赖 api + 所需 `edms-common-*`；api 仅依赖 common-core 等轻量库
 - [ ] **4. 启动类**：`edms-{domain}-biz` 下 `{Domain}Application.java`
-- [ ] **5. 配置**：Nacos dataId `edms-{domain}-biz-dev.yml`；更新 `db/edms_config.sql` 或 Nacos 控制台
+- [ ] **5. 配置**：Nacos dataId `edms-{domain}-biz-dev.yml`；更新 `database/edms_config.sql` 或 Nacos 控制台
 - [ ] **6. 网关路由**：`edms-gateway` 增加 `/admin/{path}/**` → `{domain}-biz` 路由
-- [ ] **7. 数据库**：增量脚本 `db/migrations/YYYYMMDD_*.sql`，同步 `db/edms.sql`
+- [ ] **7. 数据库**：增量脚本 `database/migrations/YYYYMMDD_*.sql`，同步 `database/edms.sql`
 - [ ] **8. Feign**（若需被调用）：在 `-api/feign/` 定义接口，消费方通过 Feign 调用
 - [ ] **9. 权限**：Controller `@HasPermission` 与 `sys_menu.permission` 注册
 - [ ] **10. 文档**：API 遵循 [shared/api-contract.md](../shared/api-contract.md)

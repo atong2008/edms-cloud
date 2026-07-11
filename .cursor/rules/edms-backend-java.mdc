@@ -1,6 +1,6 @@
 ---
 description: EDMS 后端 Java Guard（微服务边界、R<T>、事务、MyBatis-Plus）
-globs: edms-*/**/*.java
+globs: backend/edms-*/**/*.java
 alwaysApply: false
 ---
 

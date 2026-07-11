@@ -4,7 +4,7 @@ description: >-
   ALWAYS invoke before generating, modifying, or reviewing EDMS backend Java code.
   Enforces microservice boundaries, MyBatis-Plus conventions, transaction discipline,
   API contract (R<T>), OAuth2 security rules. Triggers on backend Java development,
-  "后端规范", "edms-be-guard", or .java files under edms-auth/edms-upms/edms-common/edms-visual.
+  "后端规范", "edms-be-guard", or .java files under backend/edms-auth/backend/edms-upms/backend/edms-common/backend/edms-visual.
 ---
 
 # EDMS 后端 Guard（Cursor Skill）

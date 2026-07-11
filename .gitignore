@@ -30,8 +30,9 @@ nbproject/
 !.vscode/launch.json.example
 
 # === Logs ===
-/logs/
+**/logs/
 *.log
+*.log.gz
 
 # === OS ===
 .DS_Store
@@ -99,6 +100,3 @@ datalog
 # === Local Dev ===
 deploy/.env
 application-preview.yml
-# Locked old dirs
-edms-register/
-edms-ui/

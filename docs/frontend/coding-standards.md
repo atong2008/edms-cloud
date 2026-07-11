@@ -80,7 +80,7 @@ import Form from './modules/form.vue';
 feat(system): add user management page
 fix(api): correct token refresh logic
 docs(frontend): update api conventions
-chore(edms-ui): remove unused web-ele app
+chore(frontend): remove unused web-ele app
 ```
 
 使用 `pnpm commit` 交互式提交。

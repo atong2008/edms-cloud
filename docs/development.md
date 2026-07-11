@@ -31,22 +31,22 @@
 ```bash
 git clone <repo-url> edms-cloud
 cd edms-cloud
-mvn clean install -T 4 -Pcloud
+cd backend && mvn clean install -T 4 -Pcloud
 ```
 
 ### 3.2 数据库初始化
 
-详见 [db/README.md](../db/README.md)。概要步骤：
+详见 [database/README.md](../database/README.md)。概要步骤：
 
 ```powershell
-mysql -h 127.0.0.1 -P 3306 -u root -p --default-character-set=utf8mb4 < db\edms_config.sql
-mysql -h 127.0.0.1 -P 3306 -u root -p --default-character-set=utf8mb4 < db\edms.sql
+mysql -h 127.0.0.1 -P 3306 -u root -p --default-character-set=utf8mb4 < database\edms_config.sql
+mysql -h 127.0.0.1 -P 3306 -u root -p --default-character-set=utf8mb4 < database\edms.sql
 ```
 
 ### 3.3 本地环境变量（IDE 调试）
 
 ```powershell
-Copy-Item config\local.env.example config\local.env
+Copy-Item deploy\.env.example deploy\.env
 Copy-Item .vscode\launch.json.example .vscode\launch.json
 ```
 
@@ -55,7 +55,8 @@ Copy-Item .vscode\launch.json.example .vscode\launch.json
 ### 4.1 Docker Compose（推荐）
 
 ```bash
-docker compose build && docker compose up
+docker compose -f deploy/docker-compose.yml build
+docker compose -f deploy/docker-compose.yml up
 ```
 
 ### 4.2 服务端口
@@ -81,12 +82,12 @@ docker compose build && docker compose up
 1. edms-register
 2. edms-gateway
 3. edms-auth
-4. edms-upms-biz
+4. edms-upms
 
 ## 5. 启动前端（Phase 2 迁入后）
 
 ```bash
-cd edms-ui
+cd frontend
 pnpm install
 pnpm dev
 ```
@@ -107,9 +108,9 @@ server: {
 
 ### Monorepo `.gitignore`
 
-- 根目录 `.gitignore`：Java/全仓规则 + `edms-ui/.git/`、`edms-ui/.github/` + env 显式路径
-- `edms-ui/.gitignore`：Vben 前端构建产物与 env 补全；`pnpm-lock.yaml` 需提交
-- 复制 Vben 后务必删除 `edms-ui/.git/`；前端 IDE 配置见 `edms-ui/.vscode/`（提交到仓库）
+- 根目录 `.gitignore`：Java/全仓规则 + `frontend/.git/`、`frontend/.github/` + env 规则
+- 前端 `node_modules`/构建产物由根 `.gitignore` 统一排除；`pnpm-lock.yaml` 需提交
+- 复制 Vben 上游代码后务必删除 `frontend/.git/`、`frontend/.github/`
 
 ## 6. 常见问题
 
@@ -145,15 +146,15 @@ mvn verify -Pcloud -B
 | 触发方式 | 配置 | 何时生效 |
 |----------|------|----------|
 | 始终 | `.cursor/rules/edms-governance-index.mdc` | 每次对话注入规范索引 |
-| 编辑 Java | `.cursor/rules/edms-backend-java.mdc` | 打开/编辑 `edms-*/**/*.java` |
-| 编辑前端 | `.cursor/rules/edms-frontend.mdc` | 打开/编辑 `edms-ui/**/*.{vue,ts,tsx}` |
-| 编辑 SQL | `.cursor/rules/edms-database.mdc` | 打开/编辑 `db/**/*.sql` |
+| 编辑 Java | `.cursor/rules/edms-backend-java.mdc` | 打开/编辑 `backend/edms-*/**/*.java` |
+| 编辑前端 | `.cursor/rules/edms-frontend.mdc` | 打开/编辑 `frontend/**/*.{vue,ts,tsx}` |
+| 编辑 SQL | `.cursor/rules/edms-database.mdc` | 打开/编辑 `database/**/*.sql` |
 | Skill 手动 | `.cursor/skills/edms-be-governance/`、`edms-fe-governance/` | 对话中 @ 或描述匹配时 |
 
 完整 Guard 细则仍在 `docs/backend/`、`docs/frontend/`；Rules 注入 Layer 0 摘要，Agent 应按需读取 references。
 
 ## 7. 数据库变更
 
-- 增量脚本：`db/migrations/YYYYMMDD_描述.sql`
-- 同步更新全量脚本 `db/edms.sql`
+- 增量脚本：`database/migrations/YYYYMMDD_描述.sql`
+- 同步更新全量脚本 `database/edms.sql`
 - 新表遵循 [database/mysql-table-standard.md](database/mysql-table-standard.md)

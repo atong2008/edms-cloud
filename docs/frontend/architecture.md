@@ -66,7 +66,7 @@ API 代理（Phase 3 联调，写入 `apps/web-app/vite.config.ts`）：
 ## 常用命令
 
 ```bash
-cd edms-ui
+cd frontend
 pnpm install
 pnpm dev              # 启动 web-app
 pnpm build            # 构建 web-app

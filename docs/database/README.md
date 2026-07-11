@@ -14,7 +14,7 @@
 |------|------|
 | 现有 `sys_*` 表（Pig 遗留） | 保持现有字段（`create_time`、`del_flag` 等），不做迁移 |
 | 新增业务表 | 严格遵循 [mysql-table-standard.md](mysql-table-standard.md) |
-| 增量脚本 | `db/migrations/YYYYMMDD_描述.sql`，同步更新 `db/edms.sql` |
+| 增量脚本 | `database/migrations/YYYYMMDD_描述.sql`，同步更新 `database/edms.sql` |
 | 运行时规则 | [../backend/references/db-rules.md](../backend/references/db-rules.md) |
 
 ## Cursor 规则

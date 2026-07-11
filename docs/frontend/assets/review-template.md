@@ -4,7 +4,7 @@
 
 日期: YYYY-MM-DD
 
-审查范围: `edms-ui/apps/web-app/src/**`（或指定路径）
+审查范围: `frontend/apps/web-app/src/**`（或指定路径）
 
 ## 契约视角
 ### P0

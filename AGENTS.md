@@ -81,8 +81,8 @@ The following four rules apply to all tasks and take precedence over other defau
 
 | 模块 | 类型 | 说明 |
 |------|------|------|
-| `edms-upms` | 后端 | 用户权限（系统管理 API） |
-| `edms-ui/apps/web-app` | 前端 | Vben 业务入口（Phase 2 迁入） |
+| `backend/edms-upms` | 后端 | 用户权限（系统管理 API） |
+| `frontend/apps/web-app` | 前端 | Vben 业务入口（Phase 2 迁入） |
 
 ## New Feature Checklist
 

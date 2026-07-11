@@ -2,9 +2,9 @@
 name: edms-fe-governance
 description: >-
   ALWAYS invoke before generating, modifying, or reviewing EDMS frontend code
-  under edms-ui/apps/web-app. Enforces Vben 5.7 patterns, R<T> API contract,
+  under frontend/apps/web-app. Enforces Vben 5.7 patterns, R<T> API contract,
   OAuth2 Bearer, PERM/AccessControl, $t i18n. Triggers on "前端规范",
-  "edms-fe-review", or edms-ui/** .vue/.ts changes.
+  "edms-fe-review", or frontend/** .vue/.ts changes.
 ---
 
 # EDMS 前端 Guard（Cursor Skill）

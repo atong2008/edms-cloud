@@ -1,6 +1,6 @@
 ---
 description: EDMS MySQL DDL 建表规范（新表强制，存量 sys_* 不迁移）
-globs: db/**/*.sql,docs/database/**/*
+globs: database/**/*.sql,docs/database/**/*
 alwaysApply: false
 ---
 
@@ -10,7 +10,7 @@ alwaysApply: false
 
 - 完整规范：`docs/database/mysql-table-standard.md`
 - 运行时规则：`docs/backend/references/db-rules.md`
-- 增量脚本目录：`db/migrations/YYYYMMDD_描述.sql`
+- 增量脚本目录：`database/migrations/YYYYMMDD_描述.sql`
 
 ## 分轨策略
 
@@ -28,4 +28,4 @@ alwaysApply: false
 - 禁止跨服务 FOREIGN KEY；禁止 DB 层外键级联
 - 索引命名：`uk_` / `idx_` 前缀
 
-变更后同步更新 `db/edms.sql` 全量脚本。
+变更后同步更新 `database/edms.sql` 全量脚本。
