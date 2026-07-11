@@ -77,7 +77,7 @@ docker compose -f deploy/docker-compose.yml up
 
 ### 4.3 IDE 本地调试
 
-使用 VS Code / Cursor 的 Java Debug，加载 `config/local.env`。启动顺序：
+使用 VS Code / Cursor 的 Java Debug，加载 `deploy/.env`。启动顺序：
 
 1. edms-register
 2. edms-gateway

@@ -7,7 +7,7 @@
       "request": "launch",
       "mainClass": "com.alibaba.nacos.bootstrap.EdmsNacosApplication",
       "projectName": "edms-register",
-      "envFile": "${workspaceFolder}/config/local.env"
+      "envFile": "${workspaceFolder}/deploy/.env"
     },
     {
       "type": "java",
@@ -15,7 +15,7 @@
       "request": "launch",
       "mainClass": "com.edmscloud.edms.gateway.EdmsGatewayApplication",
       "projectName": "edms-gateway",
-      "envFile": "${workspaceFolder}/config/local.env"
+      "envFile": "${workspaceFolder}/deploy/.env"
     },
     {
       "type": "java",
@@ -23,7 +23,7 @@
       "request": "launch",
       "mainClass": "com.edmscloud.edms.auth.EdmsAuthApplication",
       "projectName": "edms-auth",
-      "envFile": "${workspaceFolder}/config/local.env"
+      "envFile": "${workspaceFolder}/deploy/.env"
     },
     {
       "type": "java",
@@ -31,7 +31,7 @@
       "request": "launch",
       "mainClass": "com.edmscloud.edms.admin.EdmsAdminApplication",
       "projectName": "edms-upms-biz",
-      "envFile": "${workspaceFolder}/config/local.env"
+      "envFile": "${workspaceFolder}/deploy/.env"
     },
     {
       "type": "java",
@@ -39,7 +39,7 @@
       "request": "launch",
       "mainClass": "com.edmscloud.edms.codegen.EdmsCodeGenApplication",
       "projectName": "edms-codegen",
-      "envFile": "${workspaceFolder}/config/local.env"
+      "envFile": "${workspaceFolder}/deploy/.env"
     },
     {
       "type": "java",
@@ -47,7 +47,7 @@
       "request": "launch",
       "mainClass": "com.edmscloud.edms.daemon.quartz.EdmsQuartzApplication",
       "projectName": "edms-quartz",
-      "envFile": "${workspaceFolder}/config/local.env"
+      "envFile": "${workspaceFolder}/deploy/.env"
     },
     {
       "type": "java",
@@ -55,7 +55,7 @@
       "request": "launch",
       "mainClass": "com.edmscloud.edms.monitor.EdmsMonitorApplication",
       "projectName": "edms-monitor",
-      "envFile": "${workspaceFolder}/config/local.env"
+      "envFile": "${workspaceFolder}/deploy/.env"
     }
   ]
 }
