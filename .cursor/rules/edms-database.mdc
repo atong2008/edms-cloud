@@ -1,0 +1,31 @@
+---
+description: EDMS MySQL DDL 建表规范（新表强制，存量 sys_* 不迁移）
+globs: db/**/*.sql,docs/database/**/*
+alwaysApply: false
+---
+
+# EDMS 数据库 DDL（自动规则）
+
+编辑 SQL 或数据库文档时遵守：
+
+- 完整规范：`docs/database/mysql-table-standard.md`
+- 运行时规则：`docs/backend/references/db-rules.md`
+- 增量脚本目录：`db/migrations/YYYYMMDD_描述.sql`
+
+## 分轨策略
+
+| 场景 | 策略 |
+|------|------|
+| 存量 `sys_*` 表 | 保持现有结构（`create_time`、`del_flag`、雪花 ID），不做迁移式 ALTER |
+| **新增业务表** | 严格遵循 mysql-table-standard.md |
+
+## 新表必检项
+
+- 引擎 InnoDB；utf8mb4；表与字段 **COMMENT**
+- 主键 `bigint unsigned AUTO_INCREMENT`，命名 `pk_{表名}`
+- 逻辑删除 `is_deleted` + 索引 `(is_deleted, created_at)`
+- 审计字段 `created_at`、`updated_at`（datetime(3)）
+- 禁止跨服务 FOREIGN KEY；禁止 DB 层外键级联
+- 索引命名：`uk_` / `idx_` 前缀
+
+变更后同步更新 `db/edms.sql` 全量脚本。

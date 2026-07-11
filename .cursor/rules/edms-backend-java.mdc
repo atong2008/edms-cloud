@@ -1,0 +1,40 @@
+---
+description: EDMS 后端 Java Guard（微服务边界、R<T>、事务、MyBatis-Plus）
+globs: edms-*/**/*.java
+alwaysApply: false
+---
+
+# EDMS 后端 Java（自动规则）
+
+编辑匹配文件时，必须遵守以下 Layer 0 规则。细则与模板：
+
+- Guard 入口：`docs/backend/SKILL.md`
+- 架构概览：`docs/backend/overview.md`
+- 分域细则：`docs/backend/references/`（按文件类型加载）
+- 代码模板：`docs/backend/assets/templates/`
+- 共享契约：`docs/shared/api-contract.md`
+
+## 硬规则（违反即需修正）
+
+| 域 | 规则 |
+|----|------|
+| 包名 | `com.edmscloud.edms.{domain}` |
+| 依赖 | biz → api → common；禁止 api → biz、跨服务直依赖 Mapper |
+| 跨服务 | 仅 Feign（`*-api/feign`），禁止注入其他服务 Mapper/Service |
+| Controller | 返回 `R<T>`；`@Valid` 入参；`@HasPermission`；**禁止** `@Transactional`、**禁止** 注入 Mapper |
+| Service | 写操作 `@Transactional(rollbackFor = Exception.class)`；Entity ↔ DTO/VO 转换在此层 |
+| API | 服务内短路径；网关 `/admin/**`、`/auth/**`；禁止 `/api/**` 前缀 |
+| 安全 | password/token 不出日志与 API 响应 |
+| 事务 | 事务内禁止 HTTP、文件 IO、MQ、OSS |
+| 新表 | DDL 遵循 `docs/database/mysql-table-standard.md`；存量 sys_* 不迁移 |
+
+## 按文件类型加载 references
+
+| 文件 | 加载 |
+|------|------|
+| Controller | api-rules.md, sec-val-rules.md, arch-rules.md |
+| Service | txn-rules.md, complex-rules.md |
+| Entity / Mapper | mbp-rules.md, db-rules.md, arch-rules.md |
+| Feign | msv-rules.md, feign-rules.md |
+
+生成或修改代码前，如上下文不足，先读取对应 reference 文件。

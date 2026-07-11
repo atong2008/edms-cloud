@@ -1,0 +1,10 @@
+com.edmscloud.edms.common.security.service.EdmsDefaultUserDetailsServiceImpl
+com.edmscloud.edms.common.security.service.EdmsMobileUserDetailServiceImpl
+com.edmscloud.edms.common.security.service.EdmsRedisOAuth2AuthorizationService
+com.edmscloud.edms.common.security.service.EdmsRedisOAuth2AuthorizationConsentService
+com.edmscloud.edms.common.security.component.EdmsBootCorsProperties
+com.edmscloud.edms.common.security.component.EdmsSecurityInnerAspect
+com.edmscloud.edms.common.security.component.EdmsInnerHeaderRemoveFilter
+com.edmscloud.edms.common.security.component.EdmsSecurityMessageSourceConfiguration
+com.edmscloud.edms.common.security.service.EdmsRemoteRegisteredClientRepository
+com.edmscloud.edms.common.security.captcha.CaptchaAutoConfiguration

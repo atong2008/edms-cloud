@@ -1,0 +1,104 @@
+# === Java / Maven ===
+.gradle
+/build/
+target/
+*.war
+*.ear
+*.zip
+*.tar
+*.tar.gz
+
+# === IDE ===
+.idea/
+*.iws
+*.iml
+*.ipr
+*.lock
+rebel.xml
+.settings/
+.apt_generated
+.classpath
+.factorypath
+.project
+.springBeans
+bin/
+nbproject/
+
+# === VS Code ===
+.vscode/*
+!.vscode/settings.json.example
+!.vscode/launch.json.example
+
+# === Logs ===
+/logs/
+*.log
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Temp ===
+*.cache
+*.diff
+*.patch
+*.tmp
+*.java~
+*.properties~
+*.xml~
+sessionStore
+upload
+gen_code
+
+# === Frontend: 上游 Vben Admin 携带的独立仓库（不得提交） ===
+frontend/.git/
+frontend/.github/
+
+# === Frontend / Node ===
+node_modules
+dist
+dist-ssr
+dist.zip
+dist.tar
+dist.war
+.nitro
+.output
+coverage
+*.local
+**/.vitepress/cache
+.cache
+.turbo
+.temp
+dev-dist
+.stylelintcache
+yarn.lock
+package-lock.json
+.VSCodeCounter
+**/backend-mock/data
+.omx
+.pnpm-store
+
+# === Frontend Env ===
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.analyze
+.eslintcache
+!.env*.example
+
+# === AI / Claude ===
+.claude
+.agent
+.agents
+.codex
+skills-lock.json
+.atomcode
+datalog
+
+# === Local Dev ===
+deploy/.env
+application-preview.yml
+# Locked old dirs
+edms-register/
+edms-ui/

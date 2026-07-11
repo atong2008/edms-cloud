@@ -1,0 +1,50 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: @artifactId@
+  cloud:
+    nacos:
+      username: @nacos.username@
+      password: @nacos.password@
+      discovery:
+        server-addr: ${NACOS_HOST:edms-register}:${NACOS_PORT:8848}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: openapi
+              uri: lb://edms-gateway
+              predicates:
+                - Path=/v3/api-docs/**
+              filters:
+                - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/$\{path}/v3/api-docs
+            - id: edms-auth
+              uri: lb://edms-auth
+              predicates:
+                - Path=/auth/**
+            - id: edms-upms-biz
+              uri: lb://edms-upms-biz
+              predicates:
+                - Path=/admin/**
+              metadata:
+                response-timeout: 30000
+            - id: edms-codegen
+              uri: lb://edms-codegen
+              predicates:
+                - Path=/gen/**
+            - id: edms-quartz
+              uri: lb://edms-quartz
+              predicates:
+                - Path=/job/**
+            - id: edms-monitor
+              uri: lb://edms-monitor
+              predicates:
+                - Path=/monitor/**
+  config:
+    import:
+      - optional:nacos:application-@profiles.active@.yml
+      - optional:nacos:${spring.application.name}-@profiles.active@.yml

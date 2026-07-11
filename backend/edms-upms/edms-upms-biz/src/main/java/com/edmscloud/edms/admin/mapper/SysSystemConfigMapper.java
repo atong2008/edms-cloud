@@ -1,0 +1,10 @@
+package com.edmscloud.edms.admin.mapper;
+
+import com.edmscloud.edms.admin.api.entity.SysSystemConfigEntity;
+import com.github.yulichang.base.MPJBaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface SysSystemConfigMapper extends MPJBaseMapper<SysSystemConfigEntity> {
+
+}

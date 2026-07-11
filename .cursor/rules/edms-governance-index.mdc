@@ -1,0 +1,19 @@
+---
+description: EDMS 规范文档索引与 Guard 入口
+alwaysApply: true
+---
+
+# EDMS 规范索引
+
+开发前先确认规范入口（详细规则由文件类型规则自动加载）：
+
+| 场景 | 入口 |
+|------|------|
+| 文档总索引 | `docs/README.md` |
+| 后端 Java | `docs/backend/overview.md` → `docs/backend/SKILL.md` |
+| 前端 edms-ui | `docs/frontend/SKILL.md` |
+| 前后端联调 | `docs/shared/api-contract.md` |
+| 业务需求 | `docs/requirements/`（按业务域，不按前后端拆分） |
+| 本地开发 | `docs/development.md` |
+
+新功能 Checklist 见根目录 `AGENTS.md`。

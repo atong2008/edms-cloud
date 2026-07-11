@@ -1,0 +1,95 @@
+# Repository Guidelines
+
+## Project Structure & Module Organization
+
+`edms` aggregates the Spring Cloud services through the root `pom.xml`. Runtime services sit under dedicated
+folders: `edms-register` (Nacos), `edms-gateway` (edge routing), `edms-auth` (authorization), `edms-upms` (user and
+permission), `edms-boot` (single-service launcher), and `edms-visual` (monitor, codegen, quartz). Shared libraries and
+DTOs live in `edms-common`. Sample SQL and Docker build contexts reside in `db/`, while infra manifests live in
+`docker-compose.yml`. Every module uses the standard `src/main/java` and `src/test/java` layout.
+
+The open-source edition intentionally excludes workflow, app server, MP, payment, report, BI, multi-tenant, data-scope,
+and dynamic gateway route management code. Gateway routes are maintained through normal configuration files.
+
+## Build, Test, and Development Commands
+
+- Run `mvn clean install -T 4 -Pcloud` from the project root to compile the full cloud edition with the managed BOM.
+
+- `docker compose build && docker compose up` builds images and starts the local service stack.
+
+## Testing Guidelines
+
+Use `spring-boot-starter-test` (JUnit 5, AssertJ, Mockito) for unit and slice tests. Name classes `*Tests.java` and
+colocate fixtures in `src/test/resources`. Focus coverage on authentication, gateway filters, user/permission logic,
+scheduled jobs, and code generation. Run `mvn verify` before opening a PR to exercise the full plugin stack.
+
+## Commit & Pull Request Guidelines
+
+Follow the repo’s `type(scope): summary` history, e.g. `fix(upms): clear login failure cache` or
+`feat(codegen): add template option`. Each PR must describe the impact area, list affected modules, and reference
+issues when applicable. Attach curl/Postman snippets or screenshots whenever UI or OpenAPI responses change. Avoid
+committing generated artifacts, and call out schema/config updates explicitly.
+
+## Security & Configuration Tips
+
+Never commit environment secrets; rely on `docker-compose.yml` plus `.env` overrides ignored by Git. Keep `db/` seed
+data sanitized, and drive end-to-end checks against `edms-register` (ports 8848/9848) with `edms-gateway` (9999) so
+discovery behavior matches production.
+
+## Behavioral Guidelines
+
+The following four rules apply to all tasks and take precedence over other default behaviors.
+
+### 1. Think Before Coding
+
+- When requirements are ambiguous, ask first — never make silent assumptions
+- If a simpler solution exists, say so explicitly rather than quietly picking a direction
+- When something is unclear, surface the confusion instead of pushing forward with guesswork
+
+### 2. Prefer Simplicity
+
+- Use the minimum code needed to solve the current problem; add nothing unrequested
+- Do not introduce abstractions for one-off code or design for hypothetical future needs
+- Ask yourself: would a senior engineer call this over-engineered?
+
+### 3. Surgical Changes
+
+- Only touch what the task requires; do not refactor adjacent code as a side effect
+- Do not alter style or structure unrelated to the current task
+- Every changed line must trace directly to a stated requirement
+
+### 4. Goal-Driven Execution
+
+- Convert vague instructions into verifiable goals — prefer tests as the success criterion
+- "Fix a bug" → write a failing test that reproduces it, then make it pass
+- "Add validation" → write tests covering invalid inputs, then make them pass
+
+## Documentation Index
+
+| 目录 / 文档 | 说明 |
+|-------------|------|
+| `docs/README.md` | 文档总索引 |
+| `docs/development.md` | 本地开发指南 |
+| `docs/backend/SKILL.md` | 后端 Guard 入口 |
+| `docs/frontend/SKILL.md` | 前端 Guard 入口 |
+| `docs/shared/` | 前后端共享契约（API、鉴权） |
+| `docs/database/` | 数据库 DDL 规范 |
+| `docs/requirements/` | 业务需求文档 |
+| `docs/superpowers/specs/` | 设计 spec |
+
+## Module Overview
+
+| 模块 | 类型 | 说明 |
+|------|------|------|
+| `edms-upms` | 后端 | 用户权限（系统管理 API） |
+| `edms-ui/apps/web-app` | 前端 | Vben 业务入口（Phase 2 迁入） |
+
+## New Feature Checklist
+
+- [ ] 后端模块命名与依赖方向，见 `docs/backend/overview.md`
+- [ ] API 用 `R<T>` + `@HasPermission`，见 `docs/backend/references/api-rules.md`
+- [ ] 新表 DDL 遵循 `docs/database/mysql-table-standard.md`
+- [ ] 前端 API 路径 `/admin/**`，见 `docs/frontend/references/api-rules.md`
+- [ ] 前端页面遵循 `docs/frontend/page-conventions.md` Checklist
+- [ ] 业务需求写入 `docs/requirements/{domain}/`
+- [ ] 增量 SQL 放 `db/migrations/`

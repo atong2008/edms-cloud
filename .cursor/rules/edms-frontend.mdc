@@ -1,0 +1,45 @@
+---
+description: EDMS 前端 Guard（Vben 5.7、/admin API、PERM、i18n）
+globs: edms-ui/**/*.{vue,ts,tsx}
+alwaysApply: false
+---
+
+# EDMS 前端（自动规则）
+
+编辑 `edms-ui` 下文件时，必须遵守以下 Layer 0 规则。细则与模板：
+
+- Guard 入口：`docs/frontend/SKILL.md`
+- API 权威：`docs/frontend/references/api-rules.md`
+- 反模式：`docs/frontend/references/anti-patterns.md`
+- 页面约定：`docs/frontend/page-conventions.md`
+- 共享契约：`docs/shared/api-contract.md`、`docs/shared/auth-contract.md`
+
+## 硬规则（违反即需修正）
+
+| ID | 规则 |
+|----|------|
+| FE-API-001 | 业务 API **仅**用 `requestClient`，禁止组件内 axios/fetch |
+| FE-API-002 | 路径必须 `/admin/**` 或 `/auth/**`；**禁止** `/api/**`、pig 遗留 `/api/system/**` |
+| FE-API-003 | 响应 `code/data/msg`，successCode=0；勿重复解包 `resp.data.data` |
+| FE-API-004 | 分页用 `toBackendPageParams` / `toFrontendPageResult` |
+| FE-AUTH-001 | 权限用 `PERM` 常量 + `AccessControl`，与后端 `@HasPermission` 一致 |
+| FE-I18N-001 | 用户可见文案 `$t()` |
+| FE-SEC-001 | 日志禁止 token/password |
+
+## 路径区分
+
+| 类型 | 示例 | 说明 |
+|------|------|------|
+| Vue Router | `/system/user` | 浏览器 URL，非 API |
+| API | `/admin/user/page` | requestClient 请求 |
+
+## 标准页面结构
+
+```
+views/{domain}/{feature}/list.vue
+views/{domain}/{feature}/data.ts
+views/{domain}/{feature}/modules/form.vue
+api/{domain}/{resource}.ts
+```
+
+OAuth token 交换仅在 `adapter/backend/auth.ts` 使用 `baseRequestClient`。

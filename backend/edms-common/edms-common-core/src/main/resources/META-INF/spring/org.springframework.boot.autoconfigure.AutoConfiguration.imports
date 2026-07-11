@@ -1,0 +1,5 @@
+com.edmscloud.edms.common.core.config.JacksonConfiguration
+com.edmscloud.edms.common.core.config.MessageSourceConfiguration
+com.edmscloud.edms.common.core.config.WebCommonConfiguration
+com.edmscloud.edms.common.core.config.ImmutableConfiguration
+com.edmscloud.edms.common.core.util.SpringContextHolder

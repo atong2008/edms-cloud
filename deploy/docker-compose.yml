@@ -1,0 +1,100 @@
+# 使用说明 4.0 - 微服务架构版本
+# 1. 使用docker-compose  宿主机不需要配置host来发现
+# 2. 无需修改源码，根目录  docker-compose up 即可
+# 3. 静静等待服务启动
+services:
+  edms-mysql:
+    build:
+      context: ../database
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    container_name: edms-mysql
+    image: edms-mysql
+    command: --lower_case_table_names=1
+    networks:
+      - spring_cloud_default
+
+  edms-redis:
+    container_name: edms-redis
+    image: registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/redis
+    restart: always
+    networks:
+      - spring_cloud_default
+
+  edms-register:
+    build:
+      context: ../backend/edms-register
+    restart: always
+    container_name: edms-register
+    image: edms-register
+    ports:
+      - 8848:8848
+      - 9848:9848
+      - 18080:18080
+    networks:
+      - spring_cloud_default
+
+  edms-gateway:
+    build:
+      context: ../backend/edms-gateway
+    restart: always
+    container_name: edms-gateway
+    image: edms-gateway
+    ports:
+      - 9999:9999
+    networks:
+      - spring_cloud_default
+
+  edms-auth:
+    build:
+      context: ../backend/edms-auth
+    restart: always
+    container_name: edms-auth
+    image: edms-auth
+    networks:
+      - spring_cloud_default
+
+  edms-upms:
+    build:
+      context: ../backend/edms-upms/edms-upms-biz
+    restart: always
+    container_name: edms-upms
+    image: edms-upms
+    networks:
+      - spring_cloud_default
+
+  edms-monitor:
+    build:
+      context: ../backend/edms-visual/edms-monitor
+    restart: always
+    image: edms-monitor
+    container_name: edms-monitor
+    ports:
+      - 5001:5001
+    networks:
+      - spring_cloud_default
+
+  edms-quartz:
+    build:
+      context: ../backend/edms-visual/edms-quartz
+    restart: always
+    image: edms-quartz
+    container_name: edms-quartz
+    networks:
+      - spring_cloud_default
+
+  edms-codegen:
+    build:
+      context: ../backend/edms-visual/edms-codegen
+    restart: always
+    image: edms-codegen
+    container_name: edms-codegen
+    networks:
+      - spring_cloud_default
+
+networks:
+  spring_cloud_default:
+    name: spring_cloud_default
+    driver: bridge

@@ -1,0 +1,61 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "edms-register",
+      "request": "launch",
+      "mainClass": "com.alibaba.nacos.bootstrap.EdmsNacosApplication",
+      "projectName": "edms-register",
+      "envFile": "${workspaceFolder}/config/local.env"
+    },
+    {
+      "type": "java",
+      "name": "edms-gateway",
+      "request": "launch",
+      "mainClass": "com.edmscloud.edms.gateway.EdmsGatewayApplication",
+      "projectName": "edms-gateway",
+      "envFile": "${workspaceFolder}/config/local.env"
+    },
+    {
+      "type": "java",
+      "name": "edms-auth",
+      "request": "launch",
+      "mainClass": "com.edmscloud.edms.auth.EdmsAuthApplication",
+      "projectName": "edms-auth",
+      "envFile": "${workspaceFolder}/config/local.env"
+    },
+    {
+      "type": "java",
+      "name": "edms-upms-biz",
+      "request": "launch",
+      "mainClass": "com.edmscloud.edms.admin.EdmsAdminApplication",
+      "projectName": "edms-upms-biz",
+      "envFile": "${workspaceFolder}/config/local.env"
+    },
+    {
+      "type": "java",
+      "name": "edms-codegen",
+      "request": "launch",
+      "mainClass": "com.edmscloud.edms.codegen.EdmsCodeGenApplication",
+      "projectName": "edms-codegen",
+      "envFile": "${workspaceFolder}/config/local.env"
+    },
+    {
+      "type": "java",
+      "name": "edms-quartz",
+      "request": "launch",
+      "mainClass": "com.edmscloud.edms.daemon.quartz.EdmsQuartzApplication",
+      "projectName": "edms-quartz",
+      "envFile": "${workspaceFolder}/config/local.env"
+    },
+    {
+      "type": "java",
+      "name": "edms-monitor",
+      "request": "launch",
+      "mainClass": "com.edmscloud.edms.monitor.EdmsMonitorApplication",
+      "projectName": "edms-monitor",
+      "envFile": "${workspaceFolder}/config/local.env"
+    }
+  ]
+}

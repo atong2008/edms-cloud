@@ -1,0 +1,10 @@
+com.edmscloud.edms.admin.api.feign.RemoteClientDetailsService
+com.edmscloud.edms.admin.api.feign.RemoteLogService
+com.edmscloud.edms.admin.api.feign.RemoteParamService
+com.edmscloud.edms.admin.api.feign.RemoteFileService
+com.edmscloud.edms.admin.api.feign.RemoteTokenService
+com.edmscloud.edms.admin.api.feign.RemoteUserService
+com.edmscloud.edms.admin.api.feign.RemoteDictService
+com.edmscloud.edms.admin.api.feign.RemoteMenuService
+com.edmscloud.edms.admin.api.feign.RemoteMessageService
+com.edmscloud.edms.admin.api.feign.RemoteApiKeyService
