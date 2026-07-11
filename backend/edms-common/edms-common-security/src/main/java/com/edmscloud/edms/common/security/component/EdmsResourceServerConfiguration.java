@@ -27,7 +27,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.core.annotation.AnnotationTemplateExpressionDefaults;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
@@ -89,15 +88,6 @@ public class EdmsResourceServerConfiguration {
 		}
 
 		return http.build();
-	}
-
-	/**
-	 * 创建并返回一个支持自定义权限表达式的默认模板实例
-	 * @return {@link AnnotationTemplateExpressionDefaults} 权限表达式默认模板实例
-	 */
-	@Bean
-	AnnotationTemplateExpressionDefaults prePostTemplateDefaults() {
-		return new AnnotationTemplateExpressionDefaults();
 	}
 
 }

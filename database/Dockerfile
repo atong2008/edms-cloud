@@ -1,6 +1,6 @@
 FROM registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/mysql-server:8.0.32
 
-MAINTAINER lengleng(wangiegie@gmail.com)
+LABEL org.opencontainers.image.authors="atong1978@gmail.com"
 
 ENV TZ=Asia/Shanghai
 ENV LANG C.UTF-8

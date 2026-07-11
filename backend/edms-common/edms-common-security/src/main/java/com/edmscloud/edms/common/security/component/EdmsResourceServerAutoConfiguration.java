@@ -25,6 +25,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.core.annotation.AnnotationTemplateExpressionDefaults;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 /**
@@ -84,6 +85,20 @@ public class EdmsResourceServerAutoConfiguration {
 	@ConditionalOnMissingBean(UserContextHolder.class)
 	public UserContextHolder userContextHolder() {
 		return new EdmsSecurityUserContextHolder();
+	}
+
+	/**
+	 * 创建并返回一个支持自定义权限表达式的默认模板实例。
+	 * <p>
+	 * 原先定义在 {@link EdmsResourceServerConfiguration} 中，但该类通过构造器依赖了
+	 * {@link PermitAllUrlProperties}，而后者在 {@code afterPropertiesSet()} 中会触发
+	 * {@code RequestMappingHandlerMapping} 的初始化，进而间接回到本 bean，形成循环依赖。
+	 * 将此 bean 移动至本配置类（不依赖 PermitAllUrlProperties）可彻底打破该循环。
+	 * @return {@link AnnotationTemplateExpressionDefaults} 权限表达式默认模板实例
+	 */
+	@Bean
+	AnnotationTemplateExpressionDefaults prePostTemplateDefaults() {
+		return new AnnotationTemplateExpressionDefaults();
 	}
 
 }
