@@ -2,30 +2,28 @@
 import type { VbenFormSchema } from '@vben/common-ui';
 import type { BasicOption } from '@vben/types';
 
-import { computed, markRaw } from 'vue';
+import { computed, ref } from 'vue';
 
-import { AuthenticationLogin, SliderCaptcha, z } from '@vben/common-ui';
+import { AuthenticationLogin, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
+import type { BackendSliderCaptchaSuccessPayload } from '#/components/backend-slider-captcha';
+
+import { BackendSliderCaptcha } from '#/components/backend-slider-captcha';
 import { useAuthStore } from '#/store';
+
+import type { Recordable } from '@vben/types';
 
 defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
 
+const captchaData = ref({ code: '', randomStr: '' });
+
 const MOCK_USER_OPTIONS: BasicOption[] = [
-  {
-    label: 'Super',
-    value: 'vben',
-  },
-  {
-    label: 'Admin',
-    value: 'admin',
-  },
-  {
-    label: 'User',
-    value: 'jack',
-  },
+  { label: 'Super', value: 'vben' },
+  { label: 'Admin', value: 'admin' },
+  { label: 'User', value: 'jack' },
 ];
 
 const formSchema = computed((): VbenFormSchema[] => {
@@ -78,21 +76,32 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.password'),
       rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
     },
-    {
-      component: markRaw(SliderCaptcha),
-      fieldName: 'captcha',
-      rules: z.boolean().refine((value) => value, {
-        message: $t('authentication.verifyRequiredTip'),
-      }),
-    },
   ];
 });
+
+function handleCaptchaSuccess(payload: BackendSliderCaptchaSuccessPayload) {
+  captchaData.value = { code: payload.code, randomStr: payload.randomStr };
+}
+
+async function handleLogin(values: Recordable<any>) {
+  if (!captchaData.value.code || !captchaData.value.randomStr) {
+    return;
+  }
+  await authStore.authLogin({
+    ...values,
+    code: captchaData.value.code,
+    randomStr: captchaData.value.randomStr,
+  });
+}
 </script>
 
 <template>
-  <AuthenticationLogin
-    :form-schema="formSchema"
-    :loading="authStore.loginLoading"
-    @submit="authStore.authLogin"
-  />
+  <div class="flex flex-col gap-4">
+    <BackendSliderCaptcha @success="handleCaptchaSuccess" />
+    <AuthenticationLogin
+      :form-schema="formSchema"
+      :loading="authStore.loginLoading"
+      @submit="handleLogin"
+    />
+  </div>
 </template>

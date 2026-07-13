@@ -17,7 +17,7 @@ import { message } from 'ant-design-vue';
 
 import { useAuthStore } from '#/store';
 
-import { refreshTokenApi } from './core';
+import { oAuth2RefreshToken } from '#/adapter/backend/auth';
 
 const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
@@ -46,13 +46,20 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   }
 
   /**
-   * 刷新token逻辑
+   * 刷新 token 逻辑
    */
   async function doRefreshToken() {
     const accessStore = useAccessStore();
-    const resp = await refreshTokenApi();
-    const newToken = resp.data;
+    const refreshToken = accessStore.refreshToken;
+    if (!refreshToken) {
+      throw new Error('Refresh token is missing');
+    }
+    const resp = await oAuth2RefreshToken(refreshToken);
+    const newToken = resp.access_token;
     accessStore.setAccessToken(newToken);
+    if (resp.refresh_token) {
+      accessStore.setRefreshToken(resp.refresh_token);
+    }
     return newToken;
   }
 
@@ -80,7 +87,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     }),
   );
 
-  // token过期的处理
+  // token 过期的处理
   client.addResponseInterceptor(
     authenticateResponseInterceptor({
       client,
@@ -91,14 +98,12 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     }),
   );
 
-  // 通用的错误处理,如果没有进入上面的错误处理逻辑，就会进入这里
+  // 通用的错误处理
   client.addResponseInterceptor(
     errorMessageResponseInterceptor((msg: string, error) => {
-      // 这里可以根据业务进行定制,你可以拿到 error 内的信息进行定制化处理，根据不同的 code 做不同的提示，而不是直接使用 message.error 提示 msg
-      // 当前mock接口返回的错误字段是 error 或者 message
+      // OAuth2 / 业务接口错误字段为 error 或 message
       const responseData = error?.response?.data ?? {};
       const errorMessage = responseData?.error ?? responseData?.message ?? '';
-      // 如果没有错误信息，则会根据状态码进行提示
       message.error(errorMessage || msg);
     }),
   );
