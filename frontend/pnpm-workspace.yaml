@@ -110,6 +110,7 @@ catalog:
   commitlint-plugin-function-rules: ^5.0.1
   consola: ^3.4.2
   cross-env: ^10.1.0
+  crypto-js: ^4.2.0
   cspell: ^10.0.1
   cz-git: ^1.13.1
   czg: ^1.13.1
@@ -167,6 +168,7 @@ catalog:
   sass: ^1.101.0
   sass-embedded: ^1.100.0
   secure-ls: ^2.0.0
+  sm-crypto: ^0.3.13
   sortablejs: ^1.15.7
   stylelint: ^17.13.0
   stylelint-config-recess-order: ^7.7.0

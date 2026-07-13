@@ -1,15 +1,22 @@
 import { baseRequestClient, requestClient } from '#/api/request';
+import {
+  oAuth2CheckToken,
+  oAuth2Login,
+  oAuth2Logout,
+  oAuth2RefreshToken,
+} from '#/adapter/backend/auth';
 
 export namespace AuthApi {
-  /** 登录接口参数 */
   export interface LoginParams {
-    password?: string;
-    username?: string;
+    code: string;
+    password: string;
+    randomStr: string;
+    username: string;
   }
 
-  /** 登录接口返回值 */
   export interface LoginResult {
     accessToken: string;
+    refreshToken?: string;
   }
 
   export interface RefreshTokenResult {
@@ -22,25 +29,41 @@ export namespace AuthApi {
  * 登录
  */
 export async function loginApi(data: AuthApi.LoginParams) {
-  return requestClient.post<AuthApi.LoginResult>('/auth/login', data);
+  const result = await oAuth2Login({
+    code: data.code,
+    password: data.password,
+    randomStr: data.randomStr,
+    username: data.username,
+  });
+  return {
+    accessToken: result.access_token,
+    refreshToken: result.refresh_token,
+  };
 }
 
 /**
- * 刷新accessToken
+ * 刷新 accessToken
  */
 export async function refreshTokenApi() {
-  return baseRequestClient.post<AuthApi.RefreshTokenResult>('/auth/refresh', {
-    withCredentials: true,
-  });
+  // 从 accessStore 获取 refreshToken，这里保持与 request.ts 的约定
+  const { useAccessStore } = await import('@vben/stores');
+  const accessStore = useAccessStore();
+  const refreshToken = accessStore.refreshToken;
+  if (!refreshToken) {
+    throw new Error('Refresh token is missing');
+  }
+  const result = await oAuth2RefreshToken(refreshToken);
+  return {
+    data: result.access_token,
+    status: 0,
+  } as AuthApi.RefreshTokenResult;
 }
 
 /**
  * 退出登录
  */
 export async function logoutApi() {
-  return baseRequestClient.post('/auth/logout', {
-    withCredentials: true,
-  });
+  await oAuth2Logout();
 }
 
 /**
@@ -48,4 +71,18 @@ export async function logoutApi() {
  */
 export async function getAccessCodesApi() {
   return requestClient.get<string[]>('/auth/codes');
+}
+
+/**
+ * 获取用户信息
+ */
+export async function getUserInfoApi() {
+  return requestClient.get('/admin/user/info');
+}
+
+/**
+ * 检查 token 是否有效
+ */
+export async function checkTokenApi(token: string) {
+  return oAuth2CheckToken(token);
 }
